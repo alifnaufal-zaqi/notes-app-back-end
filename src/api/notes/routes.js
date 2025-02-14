@@ -1,33 +1,30 @@
 /* eslint-disable linebreak-style */
-
-const { addNotesHandler, getAllNotesHandler, getNoteById, editNoteByIdHandler, deleteNoteByIdHandler } = require('./handler');
-
 // eslint-disable-next-line no-unused-vars, linebreak-style
-const routes = [
+const routes = (handler) => [
   {
     method: 'POST',
     path: '/notes',
-    handler: addNotesHandler
+    handler: handler.postNoteHandler,
   },
   {
     method: 'GET',
     path: '/notes',
-    handler: getAllNotesHandler,
+    handler: handler.getNotesHandler,
   },
   {
     method: 'GET',
     path: '/notes/{id}',
-    handler: getNoteById,
+    handler: handler.getNoteByIdHandler,
   },
   {
     method: 'PUT',
     path: '/notes/{id}',
-    handler: editNoteByIdHandler,
+    handler: handler.putNoteByIdHandler,
   },
   {
     method: 'DELETE',
     path: '/notes/{id}',
-    handler: deleteNoteByIdHandler,
+    handler: handler.deleteNoteByIdHandler,
   }
 ];
 
