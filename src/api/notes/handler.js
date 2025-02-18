@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 // eslint-disable-next-line no-unused-vars
-class NotesHandler{
-  constructor(service, validator){
+class NotesHandler {
+  constructor(service, validator) {
     this._service = service;
     this._validator = validator;
 
@@ -12,65 +12,65 @@ class NotesHandler{
     this.deleteNoteByIdHandler = this.deleteNoteByIdHandler.bind(this);
   }
 
-  async postNoteHandler(request, h){
+  async postNoteHandler(request, h) {
     this._validator.validateNotePayload(request.payload);
-    const { title = 'untitled', body, tags } = request.payload;
+    const { title = "untitled", body, tags } = request.payload;
 
     const noteId = await this._service.addNote({ title, body, tags });
 
     const response = h.response({
-      status: 'success',
-      message: 'Catatan Berhasil Dibuat',
+      status: "success",
+      message: "Catatan berhasil ditambahkan",
       data: {
         noteId,
-      }
+      },
     });
 
     response.code(201);
     return response;
   }
 
-  async getNotesHandler(){
+  async getNotesHandler() {
     const notes = await this._service.getNotes();
 
     return {
-      status: 'success',
+      status: "success",
       data: {
         notes,
-      }
+      },
     };
   }
 
-  async getNoteByIdHandler(request){
+  async getNoteByIdHandler(request) {
     const { id } = request.params;
     const note = await this._service.getNoteById(id);
 
     return {
-      status: 'success',
+      status: "success",
       data: {
         note,
-      }
+      },
     };
   }
 
-  async putNoteByIdHandler(request){
+  async putNoteByIdHandler(request) {
     this._validator.validateNotePayload(request.payload);
     const { id } = request.params;
     await this._service.editNoteById(id, request.payload);
 
     return {
-      status: 'success',
-      message: 'Catatan Berhasil Di Ubah',
+      status: "success",
+      message: "Catatan berhasil diperbarui",
     };
   }
 
-  async deleteNoteByIdHandler(request){
+  async deleteNoteByIdHandler(request) {
     const { id } = request.params;
     await this._service.deleteNoteById(id);
 
     return {
-      status: 'success',
-      message: 'Catatan Berhasil Di Hapus',
+      status: "success",
+      message: "Catatan berhasil dihapus",
     };
   }
 }
